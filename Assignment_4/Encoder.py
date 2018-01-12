@@ -27,9 +27,8 @@ for x in bytearray(shellcode) :
 	i+=1
 
 
-if len(encoded)%10 != 0:
+if len(encoded)%10 != 0 or encoded.endswith('\\x%02x' % 0x61):
 	reminder =(len(encoded)/4)%10
-	print len(encoded)/4
 	nops=7-reminder
 	for nop in range(0,nops):
 		encoded += '\\x'
@@ -41,5 +40,6 @@ if len(encoded)%10 != 0:
 print encoded
 print '\n\n'
 print encoded2
-
-print 'shellcode Len: %d' % len(bytearray(shellcode))
+length=len(encoded)/4
+print 'old shellcode Len: %d' % len(bytearray(shellcode))
+print 'new shellcode Len: %d' % length
